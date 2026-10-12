@@ -3,9 +3,27 @@ package utb.fai;
 public class App {
 
     public static void main(String[] args) {
-        // TODO: Implement input parameter processing
+        if(args.length < 2){
+            System.err.println("Pouziti: <IP adresa> <port>");
+            System.exit(1);
+        }
+        
+        String ip = args[0];
+        int port;
+        try{
+            port = Integer.parseInt(args[1]);
+        }catch(NumberFormatException e){
+            System.err.println("Neplatne cislo portu: " + args[1]);
+            System.exit(1);
+            return;
+        }
 
-        TelnetClient telnetClient = new TelnetClient("127.0.0.1", 23);
+        if(port < 1 || port > 65535){
+            System.err.println("Port musi byt v rozsahu 1-65535.");
+            System.exit(1);
+        }
+
+        TelnetClient telnetClient = new TelnetClient(ip, port);
         telnetClient.run(); // run telnet client
     }
 }
